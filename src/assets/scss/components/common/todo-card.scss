@@ -1,0 +1,41 @@
+.todo-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  border-radius: 5px;
+  background: #C3C3C3;
+  overflow: hidden;
+
+  &--completed {
+    background: #519945;
+
+    & .todo-card__header {
+      background: green;
+    }
+  }
+
+  &--favourite {
+    outline: 4px solid #FFD700;
+  }
+
+  &__header {
+    padding: 10px 0;
+    background: #A5A5A5;
+    text-align: center;
+  }
+
+  &__content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  &__font {
+    &--title {
+      text-align: center;
+      font-weight: 700;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.page-header {
+  width: 100%;
+  background: #C3C3C3;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 10px;
+
+    @media (min-width: 768px) {
+      align-items: center;
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__section {
+    margin: 0 10px;
+  }
+
+  &__font {
+    &--section {
+      color: #5F5F5F;
+      font-size: 18px;
+      font-weight: 700;
+    }
+  }
+}
