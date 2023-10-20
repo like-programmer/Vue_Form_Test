@@ -7,27 +7,45 @@
 
   &__add-form {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
+    flex-direction: column;
     margin: 0 auto 20px;
 
     @media (min-width: 768px) {
+      align-items: flex-end;
+      flex-direction: row;
       margin: 0 0 20px;
     }
   }
 
   &__form-input {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    margin-left: -35px;
+
+    @media (min-width: 768px) {
+      align-items: stretch;
+      flex-direction: column;
+      margin-left: 0;
+    }
 
     &:nth-child(2) {
-      flex-grow: 1;
+      @media (min-width: 768px) {
+        flex-grow: 1;
+      }
     }
   }
 
   &__input {
-    margin-top: 5px;
+    margin-left: 5px;
     padding: 10px;
-    margin-right: 20px;
+    margin-bottom: 10px;
+    max-width: 70%;
+
+    @media (min-width: 768px) {
+      margin: 5px 20px 0 0;
+      max-width: none;
+    }
 
     &--id {
       width: 50px;
@@ -45,10 +63,14 @@
      }
    }
    &--submit {
-     margin-right: 20px;
+     margin-bottom: 10px;
      display: block;
      width: 100px;
-     //padding: 3px 0;
+
+     @media (min-width: 768px) {
+       margin-bottom: 0;
+       margin-right: 20px;
+     }
    }
   }
 }
