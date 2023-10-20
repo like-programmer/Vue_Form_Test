@@ -5,45 +5,50 @@
     margin: 0 auto;
   }
 
-  &__filters {
+  &__add-form {
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 20px;
-
-    @media (min-width: 768px) {
-      flex-direction: row;
-    }
-  }
-
-  &__filter {
-    margin-bottom: 15px;
-
-    @media (min-width: 768px) {
-      margin-bottom: 0;
-      margin-right: 20px;
-    }
-
-    &--last {
-      margin-bottom: 0;
-      @media (min-width: 768px) {
-        margin-right: 0;
-        margin-left: auto;
-      }
-    }
-  }
-
-  &__input {
-    margin-left: 7px;
-  }
-
-  &__button {
-    display: block;
-    width: 150px;
+    align-items: flex-end;
     margin: 0 auto 20px;
 
     @media (min-width: 768px) {
       margin: 0 0 20px;
     }
+  }
+
+  &__form-input {
+    display: flex;
+    flex-direction: column;
+
+    &:nth-child(2) {
+      flex-grow: 1;
+    }
+  }
+
+  &__input {
+    margin-top: 5px;
+    padding: 10px;
+    margin-right: 20px;
+
+    &--id {
+      width: 50px;
+    }
+  }
+
+  &__button {
+   &--add {
+     display: block;
+     width: 150px;
+     margin: 0 auto 20px;
+
+     @media (min-width: 768px) {
+       margin: 0 0 20px;
+     }
+   }
+   &--submit {
+     margin-right: 20px;
+     display: block;
+     width: 100px;
+     //padding: 3px 0;
+   }
   }
 }

@@ -33,6 +33,10 @@ textarea {
   -webkit-appearance: none;
   appearance: none;
 
+  &:disabled {
+    background: #e1e1e1;
+  }
+
   @include placeholder {
     color: #5f5f5f;
     opacity: 1;

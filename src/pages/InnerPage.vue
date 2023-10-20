@@ -3,21 +3,25 @@
   <PageHeader :userData="userData"/>
 
   <div class="inner-page__container">
-    <ButtonItem class="inner-page__button">Add Todo</ButtonItem>
 
-    <div class="inner-page__filters">
-      <div class="inner-page__filter">
-        <span>Sort by status:</span>
-        <SelectItem class="inner-page__input" :options="statusSelectOptions"/>
+    <ButtonItem v-if="!showFrom" class="inner-page__button inner-page__button--add" @click="showFrom = true">Add Todo</ButtonItem>
+
+    <div v-else class="inner-page__add-form">
+      <div class="inner-page__form-input">
+        <span>User id</span>
+<!--  Ниже поставлен тег disabled потому что, так как по тз там должен находиться userId - меня смутило,
+      что его можно менять, так как это идентификатор пользователя. Следовательно он выводится, как написано в ТЗ
+      но только для чтения -->
+        <input class="inner-page__input inner-page__input--id" type="text" disabled :value="newTodo.userId">
       </div>
-      <div class="inner-page__filter">
-        <span>Sort by user ID:</span>
-        <SelectItem class="inner-page__input" :options="idSelectOptions"/>
+
+      <div class="inner-page__form-input">
+        <span>Todo title</span>
+        <input class="inner-page__input" type="text" v-model="newTodo.title">
       </div>
-      <div class="inner-page__filter inner-page__filter--last">
-        <span>Search:</span>
-        <input class="inner-page__input" type="text">
-      </div>
+
+      <ButtonItem class="inner-page__button inner-page__button--submit" @click="onSubmit" :disabled="isSubmitDisabled">Add</ButtonItem>
+      <ButtonItem class="inner-page__button" btnStyle="secondary" @click="showFrom = false">Close</ButtonItem>
     </div>
 
     <TodoList :list="todos"/>
@@ -28,7 +32,6 @@
 <script>
 import PageHeader from "@/components/PageHeader";
 import TodoList from "@/components/TodoList";
-import SelectItem from "@/components/common/Select";
 import ButtonItem from "@/components/common/Button";
 import axios from "axios";
 
@@ -37,41 +40,72 @@ export default {
   components: {
     PageHeader,
     TodoList,
-    SelectItem,
     ButtonItem,
   },
   data() {
     return {
       userData: null,
       todos: [],
+      showFrom: false,
+      newTodo: {
+        id: null,
+        userId: null,
+        title: '',
+        completed: false,
+        favourite: false,
+      },
     }
   },
   computed: {
-    statusSelectOptions() {
-      return ['All', 'Completed', 'Uncompleted', 'Favourites']
-    },
-    idSelectOptions() {
-      //TODO: Refactor
-      const userIds = this.todos.map((todo) => todo.userId)
-
-      return ['All Users', ...userIds]
+    isSubmitDisabled() {
+      return this.newTodo.title.length === 0;
     }
   },
   mounted() {
     this.userData = JSON.parse(localStorage.getItem('userData'))
+    this.newTodo.userId = this.userData.id;
     this.getTodos();
   },
   methods: {
-    getTodos() {
-      axios
+    async getTodos() {
+      await axios
           .get(`https://jsonplaceholder.typicode.com/todos`)
           .then((response) => {
-            this.todos = response.data
+            response.data.map((todo) => todo.favourite = false);
+
+            this.todos = response.data;
           })
           .catch((error) => {
             console.log(error);
-          });
-    }
+          })
+      return true;
+    },
+
+    async onSubmit() {
+      this.newTodo.id = this.todos.length + 1;
+
+      await axios
+          .post(`https://jsonplaceholder.typicode.com/todos`, this.newTodo)
+          .then((response) => {
+            if(response.status === 201) {
+              this.showFrom = false;
+
+              this.todos.push(this.newTodo);
+
+              this.newTodo = {
+                id: null,
+                userId: this.userData.id,
+                title: '',
+                completed: false,
+                favourite: false,
+              };
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      return true;
+    },
   }
 }
 </script>

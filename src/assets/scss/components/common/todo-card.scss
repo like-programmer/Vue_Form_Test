@@ -14,14 +14,22 @@
     }
   }
 
-  &--favourite {
-    outline: 4px solid #FFD700;
+  &__star {
+    width: 15px;
+    stroke: #FFD700;
+    stroke-width: 4px;
+
+    &--filled {
+      fill: #FFD700;
+    }
   }
 
   &__header {
-    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
     background: #A5A5A5;
-    text-align: center;
   }
 
   &__content {
